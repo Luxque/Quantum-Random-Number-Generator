@@ -2,6 +2,9 @@
 
 ## Project Description
 
+## Possible Security Vulnerability
+
 ## Tasks to Do
 
-## Possible Security Vulnerability
+* Flexibility in number of qubits.
+* Random number + password generator.
