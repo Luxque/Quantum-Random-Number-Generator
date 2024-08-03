@@ -40,7 +40,7 @@ def get_job(isa_qc, backend, num_shots):
     sampler = Sampler(backend=backend)
     job = sampler.run([isa_qc] * 100, shots=num_shots)
 
-    print("Sending job complete!")
+    print("Job dispatching complete!")
 
     return job
 
@@ -52,10 +52,10 @@ def execute(token: str, num_shots: int) -> any:
     job = get_job(isa_qc, backend, num_shots)
     result = job.result()
 
-    print("Execution complete!")
+    print("Job execution complete!")
 
     return result
 
 
 if __name__ == '__main__':
-    raise RuntimeError("Please 'main.py' to run.")
+    raise RuntimeError("Please use 'main.py' to run.")

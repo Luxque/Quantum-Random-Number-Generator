@@ -3,7 +3,7 @@ import circuit
 
 
 if __name__ == '__main__':
-    print("Welcome to Quantum Random Number Generator!")
+    print("Quantum Random Number Generator")
     print("─" * os.get_terminal_size().columns)
 
     token = input("Token: ")
