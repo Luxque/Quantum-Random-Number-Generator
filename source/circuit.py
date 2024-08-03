@@ -36,20 +36,20 @@ def get_isa_circuit(qc, backend):
     return isa_qc
 
 
-def get_job(isa_qc, backend, num_shots):
+def send_job(isa_qc, backend, reps: int):
     sampler = Sampler(backend=backend)
-    job = sampler.run([isa_qc] * 100, shots=num_shots)
+    job = sampler.run([isa_qc] * reps, shots=backend.max_shots)
 
     print("Job dispatching complete!")
 
     return job
 
 
-def execute(token: str, num_shots: int) -> any:
+def execute(token: str, reps: int):
     backend = get_backend(token)
-    qc = get_circuit(127)
+    qc = get_circuit(backend.num_qubits)
     isa_qc = get_isa_circuit(qc, backend)
-    job = get_job(isa_qc, backend, num_shots)
+    job = send_job(isa_qc, backend, reps)
     result = job.result()
 
     print("Job execution complete!")

@@ -1,5 +1,5 @@
-import os, math, secrets
-import circuit
+import os
+import circuit, output
 
 
 if __name__ == '__main__':
@@ -7,25 +7,25 @@ if __name__ == '__main__':
     print("─" * os.get_terminal_size().columns)
 
     token = input("Token: ")
-    num_shots = int(input("Shots: "))
-    print("Input complete!")
+    mode = input("Mode: ").lower()
+    if mode not in ['random', 'password']:
+        raise RuntimeError("Invalid mode.")
 
-    result = circuit.execute(token, num_shots)
-    bit_str_dict = result[0].data.meas.get_counts()
-    
-    width = math.floor(math.log10(num_shots-1)) + 1
-    index = 0
+    if mode == 'random':
+        num_random = int(input("Number of Random Numbers: "))
+        print("Input complete!")
 
-    while len(bit_str_dict) > 0:
-        bit_str = secrets.choice(list(bit_str_dict.keys()))
-        if bit_str_dict[bit_str] <= 1:
-            del bit_str_dict[bit_str]
-        else:
-            bit_str_dict[bit_str] -= 1
-            
-        bit_str_int = int(bit_str, 2)
-        print(f"#{index:0{width}d}: {bit_str_int}")
+        result = circuit.execute(token, 1)
+        output.print_random(result, num_random)
 
-        index += 1
+    else: # mode == 'password'
+        len_password = int(input("Length of Passwords: "))
+        num_password = int(input("Number of Passwords: "))
+        print("Input complete!")
+
+        result = circuit.execute(token, num_password)
+        output.print_password(result, num_password, len_password)
     
     print("─" * os.get_terminal_size().columns)
+
+    exit(0)
