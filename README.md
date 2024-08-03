@@ -6,5 +6,6 @@
 
 ## Tasks to Do
 
-* Flexibility in number of qubits.
 * Random number + password generator.
+* Flexibility in number of qubits.
+* Command line parser.
