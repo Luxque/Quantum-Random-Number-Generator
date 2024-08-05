@@ -21,11 +21,17 @@ def print_random(result, num_random: int) -> None:
         index += 1
 
 
-def print_password(result, num_password, len_password) -> None:
+def print_password(result, num_password: int, len_password: int, settings: tuple) -> None:
     import string
 
     width = calc.calc_width(num_password)
-    characters = string.ascii_letters + string.digits + string.punctuation
+    characters = ''
+    if settings[0]:
+        characters += string.digits
+    if settings[1]:
+        characters += string.ascii_letters
+    if settings[2]:
+        characters += string.punctuation
     index = 0
 
     for i in range(num_password):
