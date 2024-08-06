@@ -1,6 +1,10 @@
 import math, secrets
 
 
+def calc_min_number_qubits(minimum: int, maximum: int) -> int:
+    return math.ceil(math.log2(abs(maximum-minimum)+1))
+
+
 def calc_width(n: int) -> int:
     return math.floor(math.log10(n-1)) + 1
 

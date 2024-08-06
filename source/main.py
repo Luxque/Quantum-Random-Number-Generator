@@ -1,5 +1,5 @@
 import os
-import circuit, output
+import util, circuit, output
 
 
 if __name__ == '__main__':
@@ -7,16 +7,24 @@ if __name__ == '__main__':
     print("─" * os.get_terminal_size().columns)
 
     token = input("Token: ")
-    mode = input("Mode: ").lower()
+    mode = input("Mode [Random/Password]: ").lower()
     if mode not in ['random', 'password']:
         raise RuntimeError("Invalid mode.")
 
     if mode == 'random':
         num_random = int(input("Number of Random Numbers: "))
+        minimum = int(input("Minimum: "))
+        maximum = int(input("Maximum: "))
+
+        if minimum > maximum:
+            raise RuntimeError("Invalid min/max.")
+
+        min_number_qubits = util.calc_min_number_qubits(minimum, maximum)
+
         print("Input complete!")
 
-        result = circuit.execute(token, 1)
-        output.print_random(result, num_random)
+        result = circuit.execute(token, min_number_qubits, 1)
+        output.print_random(result, num_random, minimum, maximum)
 
     else: # mode == 'password'
         len_password = int(input("Length of Passwords: "))
@@ -43,7 +51,7 @@ if __name__ == '__main__':
 
         print("Input complete!")
 
-        result = circuit.execute(token, num_password)
+        result = circuit.execute(token, 127, num_password)
         output.print_password(result, num_password, len_password, settings)
     
     print("─" * os.get_terminal_size().columns)

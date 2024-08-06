@@ -3,12 +3,12 @@ from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2 as Sampler
 from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 
 
-def get_backend(token: str):
+def get_backend(token: str, min_num_qubits: int):
     service = QiskitRuntimeService(channel='ibm_quantum', token=token)
     backend = service.least_busy(
         operational=True, 
         simulator=False, 
-        min_num_qubits=127
+        min_num_qubits=min_num_qubits
     )
     
     print(f"Chosen Backend: {backend.name}")
@@ -36,7 +36,7 @@ def get_isa_circuit(qc, backend):
     return isa_qc
 
 
-def send_job(isa_qc, backend, reps: int):
+def dispatch_job(isa_qc, backend, reps: int):
     sampler = Sampler(backend=backend)
     job = sampler.run([isa_qc] * reps, shots=backend.max_shots)
 
@@ -45,11 +45,11 @@ def send_job(isa_qc, backend, reps: int):
     return job
 
 
-def execute(token: str, reps: int):
-    backend = get_backend(token)
+def execute(token: str, min_num_qubits: int, reps: int):
+    backend = get_backend(token, min_num_qubits)
     qc = get_circuit(backend.num_qubits)
     isa_qc = get_isa_circuit(qc, backend)
-    job = send_job(isa_qc, backend, reps)
+    job = dispatch_job(isa_qc, backend, reps)
     result = job.result()
 
     print("Job execution complete!")
