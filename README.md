@@ -18,6 +18,5 @@ Sharing these details could allow unauthorized individuals to access job results
 
 * Maximum number handling (num_random, len_password, num_password).
     * Possibly with Qiskit Batch.
-* Flexibility in number of qubits + random number range.
 * Command line parser.
 * Executable build.
