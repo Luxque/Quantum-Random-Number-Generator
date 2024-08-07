@@ -12,7 +12,11 @@ if __name__ == '__main__':
         raise RuntimeError("Invalid mode.")
 
     if mode == 'random':
-        num_random = int(input("Number of Random Numbers: "))
+        num_random = int(input("Number of Random Numbers (MAX: 100,000): "))
+
+        if not 0 < num_random <= 100_000:
+            raise RuntimeError("Limit exceeded.")
+
         minimum = int(input("Minimum: "))
         maximum = int(input("Maximum: "))
 
@@ -27,7 +31,11 @@ if __name__ == '__main__':
         output.print_random(result, num_random, minimum, maximum)
 
     else: # mode == 'password'
-        len_password = int(input("Length of Passwords: "))
+        len_password = int(input("Length of Passwords (MAX: 100,000): "))
+
+        if not 0 < len_password <= 100_000:
+            raise RuntimeError("Limit exceeded.")
+
         num_password = int(input("Number of Passwords: "))
 
         positive = ['y', 'yes', 'true']
