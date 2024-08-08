@@ -16,7 +16,7 @@ Sharing these details could allow unauthorized individuals to access job results
 
 ## To Be Implemented
 
-* Maximum number handling (num_random, len_password, num_password).
+* Maximum number handling (`num_random`, `len_password`, `num_password` in `main.py`).
     * Possibly with Qiskit Batch.
 * Command line parser.
 * Executable build.
