@@ -1,9 +1,9 @@
-from qiskit import QuantumCircuit
-from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2 as Sampler
+from qiskit import QuantumCircuit, primitives
+from qiskit_ibm_runtime import IBMBackend, QiskitRuntimeService, SamplerV2 as Sampler, RuntimeJobV2 as RuntimeJob
 from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 
 
-def get_backend(token: str, min_num_qubits: int):
+def get_backend(token: str, min_num_qubits: int) -> IBMBackend:
     service = QiskitRuntimeService(channel='ibm_quantum', token=token)
     backend = service.least_busy(
         operational=True, 
@@ -16,7 +16,7 @@ def get_backend(token: str, min_num_qubits: int):
     return backend
 
 
-def get_circuit(num_qubit: int):
+def get_circuit(num_qubit: int) -> QuantumCircuit:
     qc = QuantumCircuit(num_qubit)
     for i in range(num_qubit):
         qc.h(i)
@@ -27,7 +27,7 @@ def get_circuit(num_qubit: int):
     return qc
 
 
-def get_isa_circuit(qc, backend):
+def get_isa_circuit(qc: QuantumCircuit, backend: IBMBackend) -> QuantumCircuit:
     pass_manager = generate_preset_pass_manager(optimization_level=0, backend=backend)
     isa_qc = pass_manager.run(qc)
 
@@ -36,7 +36,7 @@ def get_isa_circuit(qc, backend):
     return isa_qc
 
 
-def dispatch_job(isa_qc, backend, reps: int):
+def dispatch_job(isa_qc: QuantumCircuit, backend: IBMBackend, reps: int) -> RuntimeJob:
     sampler = Sampler(backend=backend)
     job = sampler.run([isa_qc] * reps, shots=backend.max_shots)
 
@@ -45,7 +45,7 @@ def dispatch_job(isa_qc, backend, reps: int):
     return job
 
 
-def execute(token: str, min_num_qubits: int, reps: int):
+def execute(token: str, min_num_qubits: int, reps: int) -> primitives.containers.primitive_result.PrimitiveResult:
     backend = get_backend(token, min_num_qubits)
     qc = get_circuit(backend.num_qubits)
     isa_qc = get_isa_circuit(qc, backend)
