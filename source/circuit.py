@@ -67,7 +67,7 @@ def execute(token: str, min_num_qubits: int, reps: int) -> list:
         result = job.result()
         results.append(result)
 
-    print("Execution complete!")
+    print("Job execution complete!")
 
     return results
 
