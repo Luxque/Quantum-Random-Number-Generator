@@ -16,5 +16,4 @@ Sharing these details could allow unauthorized individuals to access job results
 
 ## To Be Implemented
 
-* Output save.
 * Executable build release.
