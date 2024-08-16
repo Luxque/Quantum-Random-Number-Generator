@@ -2,12 +2,14 @@ import secrets
 import util
 
 
-def print_random(results: list, num_random: int, minimum: int, maximum: int) -> None:
-    width = util.calc_width(num_random)
+def output_random(results: list, num_random: int, minimum: int, maximum: int) -> str:
     variance = maximum - minimum + 1
     bit_str_dict = results[0][0].data.meas.get_counts()
 
+    width = util.calc_width(num_random)
     index = 0
+    output_str = ''
+
     for _ in range(num_random):
         bit_str = secrets.choice(list(bit_str_dict.keys()))
         if bit_str_dict[bit_str] <= 1:
@@ -16,17 +18,15 @@ def print_random(results: list, num_random: int, minimum: int, maximum: int) -> 
             bit_str_dict[bit_str] -= 1
             
         bit_str_int = int(bit_str, 2) % variance + minimum
-        print(f"#{index:0{width}d}: {bit_str_int}")
+        output_str += f"#{index:0{width}d}: {bit_str_int}\n"
 
         index += 1
     
-    return
+    return output_str
 
 
-def print_password(results: list, num_password: int, len_password: int, settings: tuple) -> None:
+def output_password(results: list, num_password: int, len_password: int, settings: tuple) -> str:
     import string
-
-    width = util.calc_width(num_password)
 
     characters = ''
     if settings[0]:
@@ -36,7 +36,10 @@ def print_password(results: list, num_password: int, len_password: int, settings
     if settings[2]:
         characters += string.punctuation
     
+    width = util.calc_width(num_password)
     index = 0
+    output_str = ''
+
     for result in results:
         for i in range(len(result)):
             bit_str_dict = result[i].data.meas.get_counts()
@@ -53,11 +56,11 @@ def print_password(results: list, num_password: int, len_password: int, settings
                 password += characters[bit_str_int % len(characters)]
             
             password = util.scramble_str(password)
-            print(f"#{index:0{width}d}: {password}")
+            output_str += f"#{index:0{width}d}: {password}\n"
 
             index += 1
-    
-    return
+
+    return output_str
 
 
 if __name__ == '__main__':
