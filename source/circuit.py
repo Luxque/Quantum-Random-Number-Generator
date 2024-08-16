@@ -41,7 +41,8 @@ def dispatch_jobs(isa_qc: QuantumCircuit, backend: IBMBackend, reps: int) -> lis
     circuits = []
     for _ in range(reps // max_circuits):
         circuits.append([isa_qc] * max_circuits)
-    circuits.append([isa_qc] * (reps % max_circuits))
+    if (reps % max_circuits != 0):
+        circuits.append([isa_qc] * (reps % max_circuits))
     
     jobs = []
     with Batch(backend=backend):
