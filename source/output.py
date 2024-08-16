@@ -7,7 +7,7 @@ def output_random(results: list, num_random: int, minimum: int, maximum: int) ->
     bit_str_dict = results[0][0].data.meas.get_counts()
 
     width = util.calc_width(num_random)
-    index = 0
+    count = 1
     output_str = ''
 
     for _ in range(num_random):
@@ -18,9 +18,9 @@ def output_random(results: list, num_random: int, minimum: int, maximum: int) ->
             bit_str_dict[bit_str] -= 1
             
         bit_str_int = int(bit_str, 2) % variance + minimum
-        output_str += f"#{index:0{width}d}: {bit_str_int}\n"
+        output_str += f"#{count:0{width}d}: {bit_str_int}\n"
 
-        index += 1
+        count += 1
     
     return output_str
 
@@ -37,7 +37,7 @@ def output_password(results: list, num_password: int, len_password: int, setting
         characters += string.punctuation
     
     width = util.calc_width(num_password)
-    index = 0
+    count = 1
     output_str = ''
 
     for result in results:
@@ -56,9 +56,9 @@ def output_password(results: list, num_password: int, len_password: int, setting
                 password += characters[bit_str_int % len(characters)]
             
             password = util.scramble_str(password)
-            output_str += f"#{index:0{width}d}: {password}\n"
+            output_str += f"#{count:0{width}d}: {password}\n"
 
-            index += 1
+            count += 1
 
     return output_str
 

@@ -6,7 +6,7 @@ def calc_min_number_qubits(minimum: int, maximum: int) -> int:
 
 
 def calc_width(n: int) -> int:
-    return math.floor(math.log10(n-1)) + 1
+    return math.floor(math.log10(n)) + 1
 
 
 def scramble_str(s: str) -> str:
