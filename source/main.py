@@ -25,9 +25,11 @@ if __name__ == '__main__':
 
         min_number_qubits = util.calc_min_number_qubits(minimum, maximum)
 
+        print("─" * os.get_terminal_size().columns)
         print("Input complete!")
-
         result = circuit.execute(token, min_number_qubits, 1)
+
+        print("─" * os.get_terminal_size().columns)
         output.print_random(result, num_random, minimum, maximum)
 
     else: # mode == 'password'
@@ -57,9 +59,11 @@ if __name__ == '__main__':
         if True not in settings:
             raise RuntimeError("No passwords can be generated with these settings.")
 
+        print("─" * os.get_terminal_size().columns)
         print("Input complete!")
-
         result = circuit.execute(token, 127, num_password)
+        
+        print("─" * os.get_terminal_size().columns)
         output.print_password(result, num_password, len_password, settings)
     
     print("─" * os.get_terminal_size().columns)

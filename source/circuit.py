@@ -1,5 +1,5 @@
-from qiskit import QuantumCircuit, primitives
-from qiskit_ibm_runtime import IBMBackend, QiskitRuntimeService, SamplerV2 as Sampler, RuntimeJobV2 as RuntimeJob
+from qiskit import QuantumCircuit
+from qiskit_ibm_runtime import IBMBackend, QiskitRuntimeService, SamplerV2 as Sampler, Batch
 from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 
 
@@ -36,25 +36,39 @@ def get_isa_circuit(qc: QuantumCircuit, backend: IBMBackend) -> QuantumCircuit:
     return isa_qc
 
 
-def dispatch_job(isa_qc: QuantumCircuit, backend: IBMBackend, reps: int) -> RuntimeJob:
-    sampler = Sampler(backend=backend)
-    job = sampler.run([isa_qc] * reps, shots=backend.max_shots)
+def dispatch_jobs(isa_qc: QuantumCircuit, backend: IBMBackend, reps: int) -> list:
+    max_circuits = 10
+    circuits = []
+    for _ in range(reps // max_circuits):
+        circuits.append([isa_qc] * max_circuits)
+    circuits.append([isa_qc] * (reps % max_circuits))
+    
+    jobs = []
+    with Batch(backend=backend):
+        sampler = Sampler(backend=backend)
+        for circuit in circuits:
+            job = sampler.run(circuit, shots=backend.max_shots)
+            jobs.append(job)
 
     print("Job dispatching complete!")
 
-    return job
+    return jobs
 
 
-def execute(token: str, min_num_qubits: int, reps: int) -> primitives.containers.primitive_result.PrimitiveResult:
+def execute(token: str, min_num_qubits: int, reps: int) -> list:
     backend = get_backend(token, min_num_qubits)
     qc = get_circuit(backend.num_qubits)
     isa_qc = get_isa_circuit(qc, backend)
-    job = dispatch_job(isa_qc, backend, reps)
-    result = job.result()
+    jobs = dispatch_jobs(isa_qc, backend, reps)
+    
+    results = []
+    for job in jobs:
+        result = job.result()
+        results.append(result)
 
-    print("Job execution complete!")
+    print("Execution complete!")
 
-    return result
+    return results
 
 
 if __name__ == '__main__':
