@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
         print("─" * os.get_terminal_size().columns)
 
-        repeat = util.positive_negative(input("Repeat [Y/N]: ").lower())
+        repeat = util.positive_negative(input("Repeat? [Y/N]: ").lower())
 
     print("─" * os.get_terminal_size().columns)
 
