@@ -16,7 +16,7 @@ if __name__ == '__main__':
         if mode not in ['random', 'r', 'password', 'p']:
             raise RuntimeError("Invalid mode.")
 
-        if mode == 'random':
+        if mode in ['random', 'r']:
             num_random = int(input("Number of Random Numbers (MAX == 100,000): "))
 
             if not 0 < num_random <= 100_000:
