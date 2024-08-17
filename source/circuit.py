@@ -31,7 +31,7 @@ def get_isa_circuit(qc: QuantumCircuit, backend: IBMBackend) -> QuantumCircuit:
     pass_manager = generate_preset_pass_manager(optimization_level=0, backend=backend)
     isa_qc = pass_manager.run(qc)
 
-    print("Transpilation complete!")
+    print("Circuit transpilation complete!")
 
     return isa_qc
 
