@@ -13,8 +13,6 @@ if __name__ == '__main__':
         filename = input("Save File Name (Empty String == No Save): ")
         token = input("Token: ")
         mode = input("Mode [Random/Password]: ").lower()
-        if mode not in ['random', 'r', 'password', 'p']:
-            raise RuntimeError("Invalid mode.")
 
         if mode in ['random', 'r']:
             num_random = int(input("Number of Random Numbers (MAX == 100,000): "))
@@ -39,7 +37,7 @@ if __name__ == '__main__':
 
             output_str += output.output_random(result, num_random, minimum, maximum)
 
-        else: # mode == 'password'
+        elif mode in ['password', 'p']
             len_password = int(input("Length of Passwords (MAX == 100,000): "))
 
             if not 0 < len_password <= 100_000:
@@ -63,6 +61,9 @@ if __name__ == '__main__':
             print("─" * os.get_terminal_size().columns)
 
             output_str += output.output_password(result, num_password, len_password, settings)
+
+        else:
+            raise RuntimeError("Invalid mode.")
 
         print(output_str, end='')
         if (filename != ''):
