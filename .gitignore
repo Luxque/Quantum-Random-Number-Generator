@@ -1,2 +1,5 @@
 source/__pycache__
+source/build
+source/dist
+source/main.spec
 source/*.txt
