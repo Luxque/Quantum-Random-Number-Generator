@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
             output_str += output.output_random(result, num_random, minimum, maximum)
 
-        elif mode in ['password', 'p']
+        elif mode in ['password', 'p']:
             len_password = int(input("Length of Passwords (MAX == 100,000): "))
 
             if not 0 < len_password <= 100_000:
@@ -69,6 +69,8 @@ if __name__ == '__main__':
         if (filename != ''):
             with open(filename, 'w') as file:
                 file.write(output_str)
+
+        print("─" * os.get_terminal_size().columns)
 
         repeat = util.positive_negative(input("Repeat [Y/N]: ").lower())
 
