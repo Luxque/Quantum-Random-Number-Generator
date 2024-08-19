@@ -16,4 +16,4 @@ Sharing these details could allow unauthorized individuals to access job results
 
 ## To Be Implemented
 
-* Executable build release.
+The project is now complete! 🎉
