@@ -16,4 +16,5 @@ Sharing these details could allow unauthorized individuals to access job results
 
 ## To Be Implemented
 
-The project is now complete! 🎉
+* Expand functionality (generating floating-point numbers).
+* Expand quantum programming languages.
